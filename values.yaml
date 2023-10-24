@@ -214,6 +214,16 @@ apps:
   HELX_DB_HOSTNAME: ""
   PGADMIN_DISABLE_POSTFIX: "true"
   PGADMIN_LISTEN_PORT: "80"
+  # -- The host that is running rstudio-server, localhost since it is running
+  # in same pod as nginx.
+  RSTUDIO_SERVER_HOST: "localhost"
+  # -- The port that rstudio-server is running on.
+  RSTUDIO_SERVER_PORT: "8787"
+  # -- The custom path prefix that rstudio-server needs to use for URLs.  For
+  # example "/rstudio". 
+  RSTUDIO_SERVER_BASE_PATH: "/"
+  # -- The log level that rstudio-server should use.  debug, info, warn, error
+  RSTUDIO_LOG_LEVEL: "debug"
 
 # -- Settings for django sqlite3 db file persistence, if postgresql is not enabled (postgresql.enabled: false).
 sqliteStorage:
