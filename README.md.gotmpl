@@ -3,6 +3,19 @@
 
 {{ template "chart.versionBadge" .  }}{{ template "chart.typeBadge" .  }}{{ template "chart.appVersionBadge" .  }}
 
+Minimum required changes to get a deployment
+Blind cut and paste gets you a result
+More details on how to use the chart at a lower level
+FAQ
+
+## About Appstore
+
+Appstore is a backend API that creates running instances of applications that are private to a user that is logged in through some SSO, like Google or UNC Shibboleth. The HeLx product is basically appstore overlayed with the helx-ui user interface. Through appstore, helx-ui can allow a user to create an arbitrary number of instances of applications as containers in Kubernetes, with minimal configuration.
+
+## Minimum Viable deployment
+
+Talk about stdnfsPvc
+
 ## CI/CD
 
 When the main branch of this chart is updated, using Github Actions we send the updated version to helm-charts repo to be indexed and packaged automatically.

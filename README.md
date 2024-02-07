@@ -2,7 +2,20 @@
 
 A Helm chart for Kubernetes
 
-![Version: 3.2.3](https://img.shields.io/badge/Version-3.2.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.0](https://img.shields.io/badge/AppVersion-3.1.0-informational?style=flat-square)
+![Version: 4.1.0](https://img.shields.io/badge/Version-4.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
+
+Minimum required changes to get a deployment
+Blind cut and paste gets you a result
+More details on how to use the chart at a lower level
+FAQ
+
+## About Appstore
+
+Appstore is a backend API that creates running instances of applications that are private to a user that is logged in through some SSO, like Google or UNC Shibboleth. The HeLx product is basically appstore overlayed with the helx-ui user interface. Through appstore, helx-ui can allow a user to create an arbitrary number of instances of applications as containers in Kubernetes, with minimal configuration.
+
+## Minimum Viable deployment
+
+Talk about stdnfsPvc
 
 ## CI/CD
 
@@ -32,10 +45,6 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | apps.WEBTOP_PGID | string | `"1000"` | PGID variable in webtop specifies the GID to switch the user to after initialization. |
 | apps.WEBTOP_PUID | string | `"1000"` | PUID variable in webtop specifies the UID to switch the user to after initialization. |
 | appstoreEntrypointArgs | string | `"make start"` | Allow for a custom entrypoint command via the values file. |
-| artillery.loadArrivalRate | int | `10` |  |
-| artillery.loadDuration | int | `10` |  |
-| artillery.loadTest | bool | `false` |  |
-| artillery.smokeTest | bool | `false` | When either smokeTest or loadTest is true, set CREATE_TEST_USERS, TEST_USERS_PATH under django settings. |
 | db | object | `{"host":"postgresql","name":"appstore","port":5432}` | appstore database settings |
 | debug | string | `""` |  |
 | django.ALLOW_DJANGO_LOGIN | string | `""` | show Django log in fields (true | false) |
@@ -43,15 +52,19 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | django.APPSTORE_DJANGO_PASSWORD | string | `""` |  |
 | django.APPSTORE_DJANGO_USERNAME | string | `"admin"` |  |
 | django.AUTHORIZED_USERS | string | `""` | user emails for oauth providers |
+| django.AUTO_WHITELIST_PATTERNS | list | `[]` | Note that these only run on a user's primary alias. If a user has primary@cs.unc.edu as their primary alias, and secondary@renci.org as a secondary alias, they will only be whitelisted automatically if cs.unc.edu emails are allowed. ex. Whitelist all RENCI emails - "^[A-Za-z0-9._%+-]+@renci\\.org$" ex. Whitelist all UNC emails - "^[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\\.)?unc\\.edu$" ex. Whitelist CS dept. (grad./prof.) UNC emails - "^[A-Za-z0-9._%+-]+@cs\\.unc\\.edu$" |
 | django.CREATE_TEST_USERS | string | `"false"` | create test users for load testing |
 | django.DEV_PHASE | string | `"live"` | should be 'live' unless you are doing some kind of development |
 | django.DOCKSTORE_APPS_BRANCH | string | `"v1.6.0"` | Specify the git branch to use for HeLx app specifications.  When declaring 'tycho.externalAppRegistryRepo' leave this as an empty string. |
+| django.EMAIL_HOST | string | `""` | Email Server host ie relay.unc.edu | relay.renci.org |
 | django.EMAIL_HOST_PASSWORD | string | `""` | password of account to use for outgoing emails |
 | django.EMAIL_HOST_USER | string | `""` | email of account to use for outgoing emails |
+| django.EMAIL_PORT | string | `""` | Email Server port ie 25 or other. |
+| django.EMAIL_USE_TLS | bool | `false` | Does the Email Server require TLS connection or not? Boolean (true | false) |
 | django.IMAGE_DOWNLOAD_URL | string | `""` | Specify URL to use for the "Image Download" link on the top part of website. |
 | django.RECIPIENT_EMAILS | string | `""` | list of appstore registration emails |
 | django.REMOVE_AUTHORIZED_USERS | string | `""` | user emails to remove from an already-existing database |
-| django.SESSION_IDLE_TIMEOUT | int | `3600` | idle timeout for user web session |
+| django.SESSION_IDLE_TIMEOUT | string | `"2592000"` | idle timeout for user web session |
 | django.TEST_USERS_PATH | string | `"/usr/src/inst-mgmt/artillery-tests/payloads"` | parent directory where the users.txt would be mounted |
 | django.TEST_USERS_SECRET | string | `"test-users-secret"` | secret file deployed on the cluster to fetch the test users |
 | djangoSettings | string | `"helx"` | set the theme for appstore (bdc, braini, restartr, scidas) |
@@ -109,6 +122,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | oauth.GOOGLE_SITES | string | `""` |  |
 | oauth.OAUTH_PROVIDERS | string | `""` | oauth providers separated by commas (google, github) |
 | podAnnotations | object | `{}` |  |
+| podSecurityContext | object | `{}` |  |
 | postgresql | object | `{"audit":{"logConnections":true,"logHostname":true},"enabled":true,"global":{"postgresql":{"auth":{"database":"appstore-oauth","password":"renciAdmin","postgresPassword":"adminPass","username":"renci"}}},"networkPolicyEnabled":true,"persistence":{"existingClaim":"appstore-postgresql-pvc","storageClass":null},"primary":{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}},"volumePermissions":{"enabled":true}}` | postgresql settings |
 | postgresql.audit | object | `{"logConnections":true,"logHostname":true}` | postgresql logs |
 | postgresql.global.postgresql | object | `{"auth":{"database":"appstore-oauth","password":"renciAdmin","postgresPassword":"adminPass","username":"renci"}}` | postgresql credentials |
@@ -132,9 +146,6 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | saml.cache.storageClass | string | `""` |  |
 | saml.cache.storageSize | string | `"20M"` |  |
 | security.isolatedApps | bool | `true` |  |
-| securityContext.fsGroup | int | `0` |  |
-| securityContext.runAsGroup | int | `0` |  |
-| securityContext.runAsUser | int | `0` |  |
 | service.name | string | `"http"` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
@@ -167,6 +178,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | userStorage.nfs.createPV | bool | `false` |  |
 | userStorage.nfs.path | string | `nil` |  |
 | userStorage.nfs.server | string | `nil` |  |
+| userStorage.retain | bool | `true` |  |
 | userStorage.storageClass | string | `nil` |  |
 | userStorage.storageSize | string | `"10Gi"` |  |
 
