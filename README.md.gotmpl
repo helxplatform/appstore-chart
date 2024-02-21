@@ -3,11 +3,6 @@
 
 {{ template "chart.versionBadge" .  }}{{ template "chart.typeBadge" .  }}{{ template "chart.appVersionBadge" .  }}
 
-Minimum required changes to get a deployment
-Blind cut and paste gets you a result
-More details on how to use the chart at a lower level
-FAQ
-
 ## About Appstore
 
 Appstore is a backend API that creates running instances of applications that are private to a user that is logged in through some SSO, like Google or UNC Shibboleth. The HeLx product is basically appstore overlayed with the helx-ui user interface. Through appstore, helx-ui can allow a user to create an arbitrary number of instances of applications as containers in Kubernetes, with minimal configuration.
@@ -21,11 +16,13 @@ The following values in a Helm values file will give you a minimum viable deploy
     logLevel: "info"
     django:
         DEV_PHASE: prod
-    userStorage:
-        createPVC: false
     ACCOUNT_DEFAULT_HTTP_PROTOCOL: https
+    global:
+        stdnfsPvc: stdnfs
 
 This assumes you don't have to change things like the default user that the application is run as or the DOCKSTORE_APPS_BRANCH value, which you likely do depending on your intended configuration. See the values.yaml file for more information about what each value does.
+
+It also assumes that you want to use the default value of having appstore create a new PVC for user storage. This PVC will be used as the storage location for things like users' home directories. It will be named whatever value you use for the stdnfsPvc helm value.
 
 ### stdnfsPvc
 
