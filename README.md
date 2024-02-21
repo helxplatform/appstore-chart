@@ -13,11 +13,28 @@ FAQ
 
 Appstore is a backend API that creates running instances of applications that are private to a user that is logged in through some SSO, like Google or UNC Shibboleth. The HeLx product is basically appstore overlayed with the helx-ui user interface. Through appstore, helx-ui can allow a user to create an arbitrary number of instances of applications as containers in Kubernetes, with minimal configuration.
 
-## Minimum Viable deployment
+## Deployment
 
-Talk about stdnfsPvc
+### Minimum Viable Deployment
 
-## CI/CD
+The following values in a Helm values file will give you a minimum viable deployment for appstore:
+
+    logLevel: "info"
+    django:
+        DEV_PHASE: prod
+    userStorage:
+        createPVC: false
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL: https
+
+This assumes you don't have to change things like the default user that the application is run as or the DOCKSTORE_APPS_BRANCH value, which you likely do depending on your intended configuration. See the values.yaml file for more information about what each value does.
+
+### stdnfsPvc
+
+The stdnfsPvc Helm value takes in the name of the PVC to use for students' files. This value will either be used to name the PVC when it's created or to mount an already existing PVC.
+
+Note that the stdnfs PVC itself must be created prior to the deployment if using `userStorage:createPVC: false`. To create this PVC, the cluster of the deployment must be capable of creating PVCs with an `accessModes:` value of `ReadWriteMany`. This is by default true in Sterling and ASHE, but not for some other environments like Azure.
+
+### CI/CD
 
 When the main branch of this chart is updated, using Github Actions we send the updated version to helm-charts repo to be indexed and packaged automatically.
 
@@ -178,7 +195,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | userStorage.nfs.createPV | bool | `false` |  |
 | userStorage.nfs.path | string | `nil` |  |
 | userStorage.nfs.server | string | `nil` |  |
-| userStorage.retain | bool | `true` |  |
+| userStorage.retain | bool | `true` | Keep the PVC alive when uninstalling the helm release. Set to false if the PVC should be deleted once the helm release is uninstalled. This option only applies if createPVC is set to true. No matter what this is set to, app deployments will have to be manually deleted if needed. |
 | userStorage.storageClass | string | `nil` |  |
 | userStorage.storageSize | string | `"10Gi"` |  |
 
