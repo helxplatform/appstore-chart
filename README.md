@@ -17,7 +17,6 @@ The following values in a Helm values file will give you a minimum viable deploy
     logLevel: "info"
     django:
         DEV_PHASE: prod
-    ACCOUNT_DEFAULT_HTTP_PROTOCOL: https
     global:
         stdnfsPvc: stdnfs
 
