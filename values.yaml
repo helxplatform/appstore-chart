@@ -190,6 +190,18 @@ irodsUnbranded:
   IROD_USER_VALUES: {}
   NFSRODS_HOST: ""
 
+atlas:
+  # -- Disabling will turn off the creation of secrets/configmaps for Atlas
+  enabled: true
+imagej:
+  # -- Disabling will turn off the creation of secrets/configmaps for ImageJ
+  enabled: true
+octave:
+  # -- Disabling will turn off the creation of secrets/configmaps for Octave
+  enabled: true
+webtop:
+  # -- Disabling will turn off the creation of secrets/configmaps for Webtop
+  enabled: true
 
 apps:
   DICOMGH_GOOGLE_CLIENT_ID: ""
