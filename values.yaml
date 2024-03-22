@@ -332,10 +332,13 @@ postgresql:
   enabled: true
   auth:
     # -- postgresql credentials
-    postgresPassword: "adminPass"
     database: "appstore-oauth"
     username: "renci"
-    password: "renciAdmin"
+    # -- Password and Postgres Password. Set these values if not using an existingSecret.
+    # password: "renciAdmin"
+    # postgresPassword: "adminPass"
+    # -- Set this to the name of an existing secret in the namespace, if using one.
+    # existingSecret: 
 
   # -- postgresql labels
   primary:

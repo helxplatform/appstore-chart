@@ -110,9 +110,9 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | octave.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for Octave |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql | object | `{"audit":{"logConnections":true,"logHostname":true},"auth":{"database":"appstore-oauth","password":"renciAdmin","postgresPassword":"adminPass","username":"renci"},"enabled":true,"networkPolicyEnabled":true,"persistence":{"existingClaim":"appstore-postgresql-pvc","storageClass":null},"primary":{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}},"volumePermissions":{"enabled":true}}` | postgresql settings |
+| postgresql | object | `{"audit":{"logConnections":true,"logHostname":true},"auth":{"database":"appstore-oauth","username":"renci"},"enabled":true,"networkPolicyEnabled":true,"persistence":{"existingClaim":"appstore-postgresql-pvc","storageClass":null},"primary":{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}},"volumePermissions":{"enabled":true}}` | postgresql settings |
 | postgresql.audit | object | `{"logConnections":true,"logHostname":true}` | postgresql logs |
-| postgresql.auth.postgresPassword | string | `"adminPass"` | postgresql credentials |
+| postgresql.auth.database | string | `"appstore-oauth"` | postgresql credentials |
 | postgresql.networkPolicyEnabled | bool | `true` | enable/disable postgresql network policy, allows traffic to and from appstore pod only. |
 | postgresql.persistence | object | `{"existingClaim":"appstore-postgresql-pvc","storageClass":null}` | postgresql persistence storage |
 | postgresql.primary | object | `{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}}` | postgresql labels |
