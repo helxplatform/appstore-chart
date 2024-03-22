@@ -330,14 +330,13 @@ db:
 # -- postgresql settings
 postgresql:
   enabled: true
-  global:
+  auth:
     # -- postgresql credentials
-    postgresql:
-      auth:
-        postgresPassword: "adminPass"
-        database: "appstore-oauth"
-        username: "renci"
-        password: "renciAdmin"
+    postgresPassword: "adminPass"
+    database: "appstore-oauth"
+    username: "renci"
+    password: "renciAdmin"
+
   # -- postgresql labels
   primary:
     labels: {"np-label": "appstore-db"}
