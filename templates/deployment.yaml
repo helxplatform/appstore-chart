@@ -37,7 +37,7 @@ spec:
         command:
           - sh
           - -c
-          - until pg_isready -h {{ .Release.Name }}-postgresql  -p 5432 -U postgres; do echo "waiting for postgresql"; sleep 5; done
+          - until pg_isready -h {{ include "appstore.fullname" . }}-postgresql -p 5432 -U postgres; do echo "waiting for postgresql"; sleep 5; done
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
@@ -363,11 +363,19 @@ spec:
             secretKeyRef:
               key: PG_DB_USERNAME
               name: {{ include "appstore.fullname" . }}
+        {{- if .Values.postgresql.auth.existingSecret }}
+        - name: PG_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres-password
+              name: {{ .Values.postgresql.auth.existingSecret }}
+        {{- else }}
         - name: PG_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               key: PG_DB_PASSWORD
               name: {{ include "appstore.fullname" . }}
+        {{- end }}
         - name: PG_DB_HOST
           valueFrom:
             secretKeyRef:

@@ -324,7 +324,6 @@ global:
 # -- appstore database settings
 db:
   name: appstore
-  host: postgresql
   port: 5432
 
 # -- postgresql settings
@@ -337,7 +336,7 @@ postgresql:
     # -- Password and Postgres Password. Set these values if not using an existingSecret.
     # password: "renciAdmin"
     # postgresPassword: "adminPass"
-    # -- Set this to the name of an existing secret in the namespace, if using one.
+    # -- Set this to the name of an existing secret in the namespace, if using one. Otherwise keep commented out.
     # existingSecret: 
 
   # -- postgresql labels
