@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 4.1.5](https://img.shields.io/badge/Version-4.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 4.1.6](https://img.shields.io/badge/Version-4.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
 
 ## CI/CD
 
@@ -111,9 +111,9 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | pgadmin.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for PgAdmin |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql | object | `{"audit":{"logConnections":true,"logHostname":true},"auth":{"database":"appstore-oauth","username":"renci"},"enabled":true,"networkPolicyEnabled":true,"persistence":{"existingClaim":"appstore-postgresql-pvc","storageClass":null},"primary":{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}},"volumePermissions":{"enabled":true}}` | postgresql settings |
+| postgresql | object | `{"audit":{"logConnections":true,"logHostname":true},"enabled":true,"global":{"postgresql":{"auth":{"database":"appstore-oauth","password":"renciAdmin","postgresPassword":"adminPass","username":"renci"}}},"networkPolicyEnabled":true,"persistence":{"existingClaim":"appstore-postgresql-pvc","storageClass":null},"primary":{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}},"volumePermissions":{"enabled":true}}` | postgresql settings |
 | postgresql.audit | object | `{"logConnections":true,"logHostname":true}` | postgresql logs |
-| postgresql.auth.database | string | `"appstore-oauth"` | postgresql credentials |
+| postgresql.global.postgresql | object | `{"auth":{"database":"appstore-oauth","password":"renciAdmin","postgresPassword":"adminPass","username":"renci"}}` | postgresql credentials |
 | postgresql.networkPolicyEnabled | bool | `true` | enable/disable postgresql network policy, allows traffic to and from appstore pod only. |
 | postgresql.persistence | object | `{"existingClaim":"appstore-postgresql-pvc","storageClass":null}` | postgresql persistence storage |
 | postgresql.primary | object | `{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}}` | postgresql labels |

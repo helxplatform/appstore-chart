@@ -332,16 +332,14 @@ db:
 # -- postgresql settings
 postgresql:
   enabled: true
-  auth:
+  global:
     # -- postgresql credentials
-    database: "appstore-oauth"
-    username: "renci"
-    # -- Password and Postgres Password. Set these values if not using an existingSecret.
-    # password: "renciAdmin"
-    # postgresPassword: "adminPass"
-    # -- Set this to the name of an existing secret in the namespace, if using one. Otherwise keep commented out.
-    # existingSecret: 
-
+    postgresql:
+      auth:
+        database: "appstore-oauth"
+        username: "renci"
+        password: "renciAdmin"
+        postgresPassword: "adminPass"
   # -- postgresql labels
   primary:
     labels: {"np-label": "appstore-db"}
