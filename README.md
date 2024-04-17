@@ -108,6 +108,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | oauth.GOOGLE_SITES | string | `""` |  |
 | oauth.OAUTH_PROVIDERS | string | `""` | oauth providers separated by commas (google, github) |
 | octave.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for Octave |
+| pgadmin.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for PgAdmin |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | postgresql | object | `{"audit":{"logConnections":true,"logHostname":true},"auth":{"database":"appstore-oauth","username":"renci"},"enabled":true,"networkPolicyEnabled":true,"persistence":{"existingClaim":"appstore-postgresql-pvc","storageClass":null},"primary":{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}},"volumePermissions":{"enabled":true}}` | postgresql settings |

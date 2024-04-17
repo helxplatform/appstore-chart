@@ -199,6 +199,9 @@ imagej:
 octave:
   # -- Disabling will turn off the creation of secrets/configmaps for Octave
   enabled: true
+pgadmin:
+  # -- Disabling will turn off the creation of secrets/configmaps for PgAdmin
+  enabled: true
 webtop:
   # -- Disabling will turn off the creation of secrets/configmaps for Webtop
   enabled: true
