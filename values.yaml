@@ -145,6 +145,8 @@ django:
   RECIPIENT_EMAILS: ""
   # -- should be 'live' unless you are doing some kind of development
   DEV_PHASE: "live"
+  # -- allowed domains to make post requests to the appstore
+  CSRF_DOMAINS: "https://*.renci.org,https://*.renci.unc.edu"
 
 oauth:
   # -- oauth providers separated by commas (google, github)
