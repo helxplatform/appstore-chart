@@ -64,6 +64,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | gitea.serviceName | string | `"gitea-ssh"` | the name of service in Kubernetes to connect to gitea |
 | gitea.user | string | `"git"` | the default user that gets populated in the gitea ssh config file |
 | global.ambassador_id | string | `nil` | specify the id of the ambassador for Tycho-launched services. |
+| global.ambassador_service_name | string | `"ambassador"` | specify the service name for the ambassador app |
 | global.stdnfsPvc | string | `"stdnfs"` | the name of the PVC to use for user's files |
 | gunicorn.workers | int | `5` | Set the number of gunicorn workers.  (2*CPU)+1 is recommended. |
 | image.pullPolicy | string | `"IfNotPresent"` | pull policy |

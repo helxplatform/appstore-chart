@@ -322,6 +322,8 @@ global:
   stdnfsPvc: stdnfs
   # -- specify the id of the ambassador for Tycho-launched services.
   ambassador_id:
+  # -- specify the service name for the ambassador app
+  ambassador_service_name: ambassador
 
 #############################################################################
 # -- appstore database settings
