@@ -190,6 +190,11 @@ spec:
               key: AUTHORIZED_USERS
               name: {{ include "appstore.fullname" . }}
         {{- end }}
+        - name: CSRF_DOMAINS
+          valueFrom:
+            secretKeyRef:
+              key: CSRF_DOMAINS
+              name: {{ include "appstore.fullname" . }}
         - name: OAUTH_PROVIDERS
           valueFrom:
             secretKeyRef:
