@@ -94,13 +94,6 @@ djangoSettings: helx
 # -- Allow for a custom entrypoint command via the values file.
 appstoreEntrypointArgs: "make start"
 
-artillery:
-  # -- When either smokeTest or loadTest is true, set CREATE_TEST_USERS, TEST_USERS_PATH under django settings.
-  smokeTest: false
-  loadTest: false
-  loadDuration: 10
-  loadArrivalRate: 10
-
 gunicorn:
   # -- Set the number of gunicorn workers.  (2*CPU)+1 is recommended.
   workers: 5
@@ -114,12 +107,7 @@ django:
   # ex. Whitelist all UNC emails - "^[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\\.)?unc\\.edu$"
   # ex. Whitelist CS dept. (grad./prof.) UNC emails - "^[A-Za-z0-9._%+-]+@cs\\.unc\\.edu$"
   AUTO_WHITELIST_PATTERNS: []
-  # -- create test users for load testing
-  CREATE_TEST_USERS: "false"
-  # -- parent directory where the users.txt would be mounted
-  TEST_USERS_PATH: "/usr/src/inst-mgmt/artillery-tests/payloads"
-  # -- secret file deployed on the cluster to fetch the test users
-  TEST_USERS_SECRET: "test-users-secret"
+
   # -- user emails for oauth providers
   AUTHORIZED_USERS: ""
   # -- user emails to remove from an already-existing database
@@ -134,6 +122,12 @@ django:
   ALLOW_DJANGO_LOGIN: ""
   # -- show SAML log in fields (true | false)
   ALLOW_SAML_LOGIN: ""
+  # -- Email Server host ie relay.unc.edu | relay.renci.org
+  EMAIL_HOST: ""
+  # -- Email Server port ie 25 or other.
+  EMAIL_PORT: ""
+  # -- Does the Email Server require TLS connection or not? Boolean (true | false)
+  EMAIL_USE_TLS: False
   # -- email of account to use for outgoing emails
   EMAIL_HOST_USER: ""
   # -- password of account to use for outgoing emails
@@ -146,6 +140,8 @@ django:
   RECIPIENT_EMAILS: ""
   # -- should be 'live' unless you are doing some kind of development
   DEV_PHASE: "live"
+  # -- allowed domains to make post requests to the appstore
+  CSRF_DOMAINS: "https://*.renci.org,https://*.renci.unc.edu"
 
 oauth:
   # -- oauth providers separated by commas (google, github)
@@ -196,6 +192,21 @@ irodsUnbranded:
   IROD_USER_VALUES: {}
   NFSRODS_HOST: ""
 
+atlas:
+  # -- Disabling will turn off the creation of secrets/configmaps for Atlas
+  enabled: true
+imagej:
+  # -- Disabling will turn off the creation of secrets/configmaps for ImageJ
+  enabled: true
+octave:
+  # -- Disabling will turn off the creation of secrets/configmaps for Octave
+  enabled: true
+pgadmin:
+  # -- Disabling will turn off the creation of secrets/configmaps for PgAdmin
+  enabled: true
+webtop:
+  # -- Disabling will turn off the creation of secrets/configmaps for Webtop
+  enabled: true
 
 apps:
   DICOMGH_GOOGLE_CLIENT_ID: ""
@@ -313,12 +324,15 @@ global:
   stdnfsPvc: stdnfs
   # -- specify the id of the ambassador for Tycho-launched services.
   ambassador_id:
+  # -- specify the service name for ambassador
+  ambassador_service_name: ambassador
+  # -- specify the mapping name for ambassador
+  ambassador_mapping_name: appstore-mapping
 
 #############################################################################
 # -- appstore database settings
 db:
   name: appstore
-  host: postgresql
   port: 5432
 
 # -- postgresql settings
@@ -328,10 +342,10 @@ postgresql:
     # -- postgresql credentials
     postgresql:
       auth:
-        postgresPassword: "adminPass"
         database: "appstore-oauth"
         username: "renci"
         password: "renciAdmin"
+        postgresPassword: "adminPass"
   # -- postgresql labels
   primary:
     labels: {"np-label": "appstore-db"}
