@@ -192,6 +192,21 @@ irodsUnbranded:
   IROD_USER_VALUES: {}
   NFSRODS_HOST: ""
 
+atlas:
+  # -- Disabling will turn off the creation of secrets/configmaps for Atlas
+  enabled: true
+imagej:
+  # -- Disabling will turn off the creation of secrets/configmaps for ImageJ
+  enabled: true
+octave:
+  # -- Disabling will turn off the creation of secrets/configmaps for Octave
+  enabled: true
+pgadmin:
+  # -- Disabling will turn off the creation of secrets/configmaps for PgAdmin
+  enabled: true
+webtop:
+  # -- Disabling will turn off the creation of secrets/configmaps for Webtop
+  enabled: true
 
 apps:
   DICOMGH_GOOGLE_CLIENT_ID: ""
@@ -309,12 +324,15 @@ global:
   stdnfsPvc: stdnfs
   # -- specify the id of the ambassador for Tycho-launched services.
   ambassador_id:
+  # -- specify the service name for ambassador
+  ambassador_service_name: ambassador
+  # -- specify the mapping name for ambassador
+  ambassador_mapping_name: appstore-mapping
 
 #############################################################################
 # -- appstore database settings
 db:
   name: appstore
-  host: postgresql
   port: 5432
 
 # -- postgresql settings
@@ -324,10 +342,10 @@ postgresql:
     # -- postgresql credentials
     postgresql:
       auth:
-        postgresPassword: "adminPass"
         database: "appstore-oauth"
         username: "renci"
         password: "renciAdmin"
+        postgresPassword: "adminPass"
   # -- postgresql labels
   primary:
     labels: {"np-label": "appstore-db"}
