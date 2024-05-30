@@ -64,6 +64,10 @@ spec:
         - name: GRADER_API_URL
           value: {{ .Values.graderApiUrl }}
         {{- end }}
+        {{- if .Values.eduhelxClassName }}
+        - name: EDUHELX_CLASS_NAME
+          value: {{ .Values.eduhelxClassName }}
+        {{- end }}
         - name: GUNICORN_WORKERS
           valueFrom:
             configMapKeyRef:

@@ -99,6 +99,7 @@ gunicorn:
   workers: 5
 
 graderApiUrl: ""
+eduhelxClassName: ""
 
 django:
   # -- Note that these only run on a user's primary alias.
