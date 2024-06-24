@@ -98,6 +98,8 @@ gunicorn:
   # -- Set the number of gunicorn workers.  (2*CPU)+1 is recommended.
   workers: 5
 
+graderApiUrl: ""
+
 django:
   # -- Note that these only run on a user's primary alias.
   # If a user has primary@cs.unc.edu as their primary alias,
