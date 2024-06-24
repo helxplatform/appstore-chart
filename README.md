@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 4.1.2](https://img.shields.io/badge/Version-4.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 4.1.6](https://img.shields.io/badge/Version-4.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 ## About Appstore
 
@@ -58,7 +58,8 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | apps.WEBTOP_PGID | string | `"1000"` | PGID variable in webtop specifies the GID to switch the user to after initialization. |
 | apps.WEBTOP_PUID | string | `"1000"` | PUID variable in webtop specifies the UID to switch the user to after initialization. |
 | appstoreEntrypointArgs | string | `"make start"` | Allow for a custom entrypoint command via the values file. |
-| db | object | `{"host":"postgresql","name":"appstore","port":5432}` | appstore database settings |
+| atlas.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for Atlas |
+| db | object | `{"name":"appstore","port":5432}` | appstore database settings |
 | debug | string | `""` |  |
 | django.ALLOW_DJANGO_LOGIN | string | `""` | show Django log in fields (true | false) |
 | django.ALLOW_SAML_LOGIN | string | `""` | show SAML log in fields (true | false) |
@@ -66,6 +67,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | django.APPSTORE_DJANGO_USERNAME | string | `"admin"` |  |
 | django.AUTHORIZED_USERS | string | `""` | user emails for oauth providers |
 | django.AUTO_WHITELIST_PATTERNS | list | `[]` | Note that these only run on a user's primary alias. If a user has primary@cs.unc.edu as their primary alias, and secondary@renci.org as a secondary alias, they will only be whitelisted automatically if cs.unc.edu emails are allowed. ex. Whitelist all RENCI emails - "^[A-Za-z0-9._%+-]+@renci\\.org$" ex. Whitelist all UNC emails - "^[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\\.)?unc\\.edu$" ex. Whitelist CS dept. (grad./prof.) UNC emails - "^[A-Za-z0-9._%+-]+@cs\\.unc\\.edu$" |
+| django.CSRF_DOMAINS | string | `"https://*.renci.org,https://*.renci.unc.edu"` | allowed domains to make post requests to the appstore |
 | django.DEV_PHASE | string | `"live"` | should be 'live' unless you are doing some kind of development |
 | django.DOCKSTORE_APPS_BRANCH | string | `"v1.6.0"` | Specify the git branch to use for HeLx app specifications.  When declaring 'tycho.externalAppRegistryRepo' leave this as an empty string. |
 | django.EMAIL_HOST | string | `""` | Email Server host ie relay.unc.edu | relay.renci.org |
@@ -89,6 +91,8 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | gitea.serviceName | string | `"gitea-ssh"` | the name of service in Kubernetes to connect to gitea |
 | gitea.user | string | `"git"` | the default user that gets populated in the gitea ssh config file |
 | global.ambassador_id | string | `nil` | specify the id of the ambassador for Tycho-launched services. |
+| global.ambassador_mapping_name | string | `"appstore-mapping"` | specify the mapping name for ambassador |
+| global.ambassador_service_name | string | `"ambassador"` | specify the service name for ambassador |
 | global.stdnfsPvc | string | `"stdnfs"` | the name of the PVC to use for user's files |
 | gunicorn.workers | int | `5` | Set the number of gunicorn workers.  (2*CPU)+1 is recommended. |
 | image.pullPolicy | string | `"IfNotPresent"` | pull policy |
@@ -98,6 +102,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | imagePostgresql.repository | string | `"docker.io/bitnami/postgresql"` | repository where postgresql image is located |
 | imagePostgresql.tag | int | `11` | Image tag for postgresql, coordinate this with postgresql dependency. |
 | imagePullSecrets | list | `[]` | credentials for a private repo |
+| imagej.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for ImageJ |
 | irods.BRAINI_RODS | string | `""` |  |
 | irods.IROD_COLLECTIONS | string | `""` |  |
 | irods.IROD_ZONE | string | `""` |  |
@@ -131,6 +136,8 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | oauth.GOOGLE_SECRET | string | `""` |  |
 | oauth.GOOGLE_SITES | string | `""` |  |
 | oauth.OAUTH_PROVIDERS | string | `""` | oauth providers separated by commas (google, github) |
+| octave.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for Octave |
+| pgadmin.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for PgAdmin |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | postgresql | object | `{"audit":{"logConnections":true,"logHostname":true},"enabled":true,"global":{"postgresql":{"auth":{"database":"appstore-oauth","password":"renciAdmin","postgresPassword":"adminPass","username":"renci"}}},"networkPolicyEnabled":true,"persistence":{"existingClaim":"appstore-postgresql-pvc","storageClass":null},"primary":{"labels":{"np-label":"appstore-db"},"podLabels":{"np-label":"appstore-db"}},"volumePermissions":{"enabled":true}}` | postgresql settings |
@@ -191,7 +198,8 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | userStorage.retain | bool | `true` | Keep the PVC alive when uninstalling the helm release. Set to false if the PVC should be deleted once the helm release is uninstalled. This option only applies if createPVC is set to true. No matter what this is set to, app deployments will have to be manually deleted if needed. |
 | userStorage.storageClass | string | `nil` |  |
 | userStorage.storageSize | string | `"10Gi"` |  |
+| webtop.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for Webtop |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.13.1](https://github.com/norwoodj/helm-docs/releases/v1.13.1)
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
 

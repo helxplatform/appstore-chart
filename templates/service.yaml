@@ -13,7 +13,7 @@ metadata:
       ---
       apiVersion: ambassador/v1
       kind:  Mapping
-      name:  appstore-mapping
+      name:  {{ .Values.global.ambassador_mapping_name }}
       prefix: /
       service: {{ include "appstore.fullname" . }}:8000
       {{ if .Values.global.ambassador_id }}

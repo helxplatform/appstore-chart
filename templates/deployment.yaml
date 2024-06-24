@@ -37,7 +37,11 @@ spec:
         command:
           - sh
           - -c
-          - until pg_isready -h {{ .Release.Name }}-postgresql  -p 5432 -U postgres; do echo "waiting for postgresql"; sleep 5; done
+          {{- if .Values.fullnameOverride }}
+          - until pg_isready -h {{ include "appstore.fullname" . }}-postgresql -p 5432 -U postgres; do echo "waiting for postgresql"; sleep 5; done
+          {{- else }}
+          - until pg_isready -h {{ .Release.Name }}-postgresql -p 5432 -U postgres; do echo "waiting for postgresql"; sleep 5; done
+          {{- end }}
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
@@ -186,6 +190,11 @@ spec:
               key: AUTHORIZED_USERS
               name: {{ include "appstore.fullname" . }}
         {{- end }}
+        - name: CSRF_DOMAINS
+          valueFrom:
+            secretKeyRef:
+              key: CSRF_DOMAINS
+              name: {{ include "appstore.fullname" . }}
         - name: OAUTH_PROVIDERS
           valueFrom:
             secretKeyRef:
@@ -363,11 +372,19 @@ spec:
             secretKeyRef:
               key: PG_DB_USERNAME
               name: {{ include "appstore.fullname" . }}
+        {{- if .Values.postgresql.auth.existingSecret }}
+        - name: PG_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres-password
+              name: {{ .Values.postgresql.auth.existingSecret }}
+        {{- else }}
         - name: PG_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               key: PG_DB_PASSWORD
               name: {{ include "appstore.fullname" . }}
+        {{- end }}
         - name: PG_DB_HOST
           valueFrom:
             secretKeyRef:
@@ -454,7 +471,10 @@ spec:
           value: "{{ .Values.tycho.shared_dir }}"
         - name: STDNFS_PVC
           value: "{{ .Values.global.stdnfsPvc }}"
-
+        {{- if .Values.global.ambassador_service_name }}
+        - name: AMBASSADOR_SVC_NAME
+          value: {{ .Values.global.ambassador_service_name }}
+        {{- end }}
         ports:
         - containerPort: 8000
         volumeMounts:
