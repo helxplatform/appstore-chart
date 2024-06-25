@@ -60,6 +60,10 @@ spec:
         - name: GITEA_SERVICE_NAME
           value: {{ .Values.gitea.serviceName }}
         {{- end }} 
+        {{- if .Values.graderApiUrl }}
+        - name: GRADER_API_URL
+          value: {{ .Values.graderApiUrl }}
+        {{- end }}
         - name: GUNICORN_WORKERS
           valueFrom:
             configMapKeyRef:
