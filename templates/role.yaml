@@ -36,6 +36,7 @@ rules:
   - "apps"
   resources:
     - deployments
+    - replicasets
   verbs:
     - create
     - delete
