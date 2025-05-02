@@ -253,6 +253,10 @@ userStorage:
   # -- Create a PVC for user's files.  If false then the PVC needs to be created
   # outside of the appstore chart.
   createPVC: true
+  # -- Keep the PVC alive when uninstalling the helm release.
+  # Set to false if the PVC should be deleted once the helm release is uninstalled.
+  # This option only applies if createPVC is set to true.
+  # No matter what this is set to, app deployments will have to be manually deleted if needed.
   retain: true
   storageSize: 10Gi
   storageClass:
