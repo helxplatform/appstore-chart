@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-network-policy
+spec:
+  # Allow pods in this Helm release to talk to one another in this namespace.
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/instance: {{ .Release.Name }}
+  policyTypes:
+  - Ingress
