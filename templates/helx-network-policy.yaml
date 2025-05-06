@@ -16,5 +16,8 @@ spec:
     - podSelector:
         matchLabels:
           app.kubernetes.io/name: nginx
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: appstore-sockets
   policyTypes:
   - Ingress
