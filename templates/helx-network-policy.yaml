@@ -3,8 +3,8 @@ kind: NetworkPolicy
 metadata:
   name: {{ .Release.Name }}-network-policy
 spec:
-  # Allow resty, ambassador, nginx, and appstore-socket pods to communicate
-  # with the appstore pod.
+  # Allow ingress to pods in the namespace from resty, ambassador, nginx, and
+  # appstore-socket pods.
   ingress:
   - from:
     - podSelector:
