@@ -19,7 +19,7 @@ imagePostgresql:
   # -- pull policy
   pullPolicy: IfNotPresent
   # -- Image tag for postgresql, coordinate this with postgresql dependency.
-  tag: 11
+  tag: 17.5.0
 
 fetcherImage:
   # -- repository where image is located
