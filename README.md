@@ -75,7 +75,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion. Set to "" before release! |
 | imagePostgresql.pullPolicy | string | `"IfNotPresent"` | pull policy |
 | imagePostgresql.repository | string | `"docker.io/bitnami/postgresql"` | repository where postgresql image is located |
-| imagePostgresql.tag | int | `11` | Image tag for postgresql, coordinate this with postgresql dependency. |
+| imagePostgresql.tag | string | `"17.5.0"` | Image tag for postgresql, coordinate this with postgresql dependency. |
 | imagePullSecrets | list | `[]` | credentials for a private repo |
 | imagej.enabled | bool | `true` | Disabling will turn off the creation of secrets/configmaps for ImageJ |
 | irods.BRAINI_RODS | string | `""` |  |
