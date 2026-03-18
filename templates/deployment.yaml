@@ -53,12 +53,8 @@ spec:
           {{- toYaml .Values.resources | nindent 10 }}
         env:
         {{- if .Values.gitea.enabled }}
-        - name: GITEA_HOST
-          value: {{ .Values.gitea.host }}
-        - name: GITEA_USER
-          value: {{ .Values.gitea.user }}
-        - name: GITEA_SERVICE_NAME
-          value: {{ .Values.gitea.serviceName }}
+        - name: GITEA_BASE_URL
+          value: {{ .Values.gitea.baseUrl }}
         {{- end }} 
         {{- if .Values.graderApiUrl }}
         - name: GRADER_API_URL
@@ -73,6 +69,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: LOG_LEVEL
+              name: {{ include "appstore.fullname" . }}-env
+        - name: USE_LOG_FILE
+          valueFrom:
+            configMapKeyRef:
+              key: USE_LOG_FILE
               name: {{ include "appstore.fullname" . }}-env
         - name: DEBUG
           valueFrom:
@@ -237,21 +238,8 @@ spec:
             secretKeyRef:
               key: GITHUB_SECRET
               name: {{ include "appstore.fullname" . }}
-        {{- if .Values.oauth.GITHUB_KEY }}
-        - name: GITHUB_KEY
-          valueFrom:
-            secretKeyRef:
-              key: GITHUB_KEY
-              name: {{ include "appstore.fullname" . }}
         {{- end }}
-        {{- if .Values.oauth.GITHUB_SITES }}
-        - name: GITHUB_SITES
-          valueFrom:
-            secretKeyRef:
-              key: GITHUB_SITES
-              name: {{ include "appstore.fullname" . }}
-        {{- end }}
-        {{- end }}
+
         {{- if .Values.oauth.GOOGLE_NAME }}
         - name: GOOGLE_NAME
           valueFrom:
@@ -268,21 +256,49 @@ spec:
             secretKeyRef:
               key: GOOGLE_SECRET
               name: {{ include "appstore.fullname" . }}
-        {{- if .Values.oauth.GOOGLE_KEY }}
-        - name: GOOGLE_KEY
+        {{- end }}
+
+        {{- if .Values.oauth.CILOGON_NAME }}
+        - name: CILOGON_NAME
           valueFrom:
             secretKeyRef:
-              key: GOOGLE_KEY
+              key: CILOGON_NAME
               name: {{ include "appstore.fullname" . }}
-        {{- end }}
-        {{- if .Values.oauth.GOOGLE_SITES }}
-        - name: GOOGLE_SITES
+        - name: CILOGON_CLIENT_ID
           valueFrom:
             secretKeyRef:
-              key: GOOGLE_SITES
+              key: CILOGON_CLIENT_ID
+              name: {{ include "appstore.fullname" . }}
+        - name: CILOGON_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: CILOGON_SECRET
               name: {{ include "appstore.fullname" . }}
         {{- end }}
+
+        {{- if .Values.oauth.OIDC_NAME }}
+        - name: OIDC_NAME
+          valueFrom:
+            secretKeyRef:
+              key: OIDC_NAME
+              name: {{ include "appstore.fullname" . }}
+        - name: OIDC_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: OIDC_CLIENT_ID
+              name: {{ include "appstore.fullname" . }}
+        - name: OIDC_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: OIDC_SECRET
+              name: {{ include "appstore.fullname" . }}
+        - name: OIDC_SERVER_URL
+          valueFrom:
+            secretKeyRef:
+              key: OIDC_SERVER_URL
+              name: {{ include "appstore.fullname" . }}
         {{- end }}
+
         {{- if .Values.irods.enabled }}
         - name: BRAINI_RODS
           valueFrom:
@@ -454,6 +470,10 @@ spec:
           value: "{{- .Values.tycho.runAsUser }}"
         - name: TYCHO_APP_RUN_AS_GROUP
           value: "{{- .Values.tycho.runAsGroup }}"
+        - name: TYCHO_APP_INIT_NOBODY_UID
+          value: "{{- .Values.tycho.initRunAsNobodyUser }}"
+        - name: TYCHO_APP_INIT_NOBODY_GID
+          value: "{{- .Values.tycho.initRunAsNobodyGroup }}"
         - name: TYCHO_APP_FS_GROUP
           value: "{{- .Values.tycho.fsGroup }}"
         - name: EXTERNAL_TYCHO_APP_REGISTRY_ENABLED
@@ -480,6 +500,8 @@ spec:
           value: "{{- .Values.tycho.initRunAsGroup }}"
         - name: TYCHO_APP_ENABLE_INIT_CONTAINER
           value: "{{- .Values.tycho.enableInitContainer }}"
+        - name: TYCHO_APP_ENABLE_TRASH_CLI
+          value: "{{- .Values.tycho.enableTrashCli }}"
         - name: CREATE_HOME_DIRS
           value: "{{- .Values.tycho.createHomeDirs }}"
         - name: PARENT_DIR

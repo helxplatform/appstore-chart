@@ -154,15 +154,18 @@ oauth:
   # -- oauth providers separated by commas (google, github)
   OAUTH_PROVIDERS: ""
   GITHUB_NAME: ""
-  GITHUB_KEY: ""
-  GITHUB_SITES: ""
   GITHUB_CLIENT_ID: ""
   GITHUB_SECRET: ""
   GOOGLE_NAME: ""
-  GOOGLE_KEY: ""
-  GOOGLE_SITES: ""
   GOOGLE_CLIENT_ID: ""
   GOOGLE_SECRET: ""
+  CILOGON_NAME: ""
+  CILOGON_CLIENT_ID: ""
+  CILOGON_SECRET: ""
+  OIDC_NAME: ""
+  OIDC_CLIENT_ID: ""
+  OIDC_SECRET: ""
+  OIDC_SERVER_URL: ""
 
 saml:
   cache:
@@ -281,6 +284,8 @@ tycho:
   runAsGroup: 0
   # -- Application processes launched will also be part of this supplimentary group.
   fsGroup: 0
+  # -- Enable trash-cli functionality in tycho-launched apps
+  enableTrashCli: false
   # -- Start the init container to take care of any needed tasks before the
   # main container is started.  This can be to create certain directories or
   # set file permissions.
@@ -293,6 +298,10 @@ tycho:
   initRunAsUser: 0
   # -- Init processes will have this group permissions.
   initRunAsGroup: 0
+  # -- "Userless" init processes will run as this user.
+  initRunAsNobodyUser: 524288
+  # -- "Userless" init processes will have these group permissions.
+  initRunAsNobodyGroup: 524288
   # -- Create Home and shared directories for users.
   createHomeDirs: true
   # -- directory that will be used to mount user's home directories in
@@ -379,11 +388,6 @@ postgresql:
 
 # -- gitea settings
 gitea:
-  # -- set whether a gitea connection is enabled
   enabled: false
-  # -- the hostname of the gitea server
-  host: eduhelx-git.apps.renci.org
-  # -- the default user that gets populated in the gitea ssh config file
-  user: git
-  # -- the name of service in Kubernetes to connect to gitea
-  serviceName: gitea-ssh
+  # -- specify to display a link to the gitea instance in the UI navbar
+  baseUrl: ""
