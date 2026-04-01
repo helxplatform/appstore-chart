@@ -442,6 +442,8 @@ spec:
         - name: {{ $key }}
           value: {{ $value | quote }}
         {{- end }}
+        - name: APP_REGISTRY_PATH
+          value: {{ .Values.appRegistry.mountPath | quote }}
         - name: IMAGE_DOWNLOAD_URL
           valueFrom:
             configMapKeyRef:
@@ -534,6 +536,8 @@ spec:
           - name: saml-claim
             mountPath: {{ .Values.saml.cache.APPSTORE_DIRECTORY }}
           {{- end }}
+          - name: appstore-registry-volume
+            mountPath: {{ .Values.appRegistry.mountPath }}
       {{- if .Values.saml.cache.enabled }}
       - name: {{ .Chart.Name }}-saml-fetch
         image: "{{ .Values.fetcherImage.repository }}:{{ .Values.fetcherImage.tag }}"
@@ -587,6 +591,13 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Values.saml.cache.claimName }}
       {{- end }}
+        - name: appstore-registry-volume
+          persistentVolumeClaim:
+            {{- if .Values.appRegistry.claimName }}
+            claimName: {{ .Values.appRegistry.claimName }}
+            {{- else }}
+            claimName: {{ include "appstore.fullname" . }}-registry-pvc
+            {{- end }}
       {{- if .Values.irodsUnbranded.enabled }}
         - configMap:
             name: appstore-nfsrods

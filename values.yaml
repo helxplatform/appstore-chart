@@ -271,6 +271,18 @@ userStorage:
     path:
     server:
 
+# -- Settings for app registry PVC mount.
+appRegistry:
+  # -- Mount path for the app registry volume.
+  mountPath: "/data/registry/"
+  # -- Name of an existing PVC to use. If unset, a PVC is created using the
+  # release fullname as a prefix (<fullname>-registry-pvc).
+  claimName: ""
+  # -- Storage size for the auto-created PVC.
+  storageSize: 10Gi
+  # -- Storage class for the auto-created PVC. Leave empty to use the default.
+  storageClass: ""
+
 # Add any extra environment variables not already defined in the chart.
 extraEnv: {}
 
