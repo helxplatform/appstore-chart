@@ -8,6 +8,7 @@ metadata:
     {{ toYaml . | nindent 4 }}
     {{- end }}
 spec:
+  replicas: {{ .Values.replicaCount }}
   strategy:
     type: "{{ .Values.updateStrategy.type }}"
   selector:
@@ -43,6 +44,28 @@ spec:
           - until pg_isready -h {{ .Release.Name }}-postgresql -p 5432 -U postgres; do echo "waiting for postgresql"; sleep 5; done
           {{- end }}
       {{- end }}
+      - name: run-migrations
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (printf "v%s" .Chart.AppVersion) }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ['/bin/bash', '-c']
+        args: ["make db-init"]
+        envFrom:
+        - configMapRef:
+            name: {{ include "appstore.fullname" . }}-env
+        - secretRef:
+            name: {{ include "appstore.fullname" . }}
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: APPSTORE_SECRET_KEY
+              name: {{ include "appstore.fullname" . }}
+        - name: EXTERNAL_TYCHO_APP_REGISTRY_ENABLED
+          value: "{{- .Values.tycho.externalAppRegistryEnabled }}"
+        - name: EXTERNAL_TYCHO_APP_REGISTRY_REPO
+          value: "{{- .Values.tycho.externalAppRegistryRepo }}"
+        - name: EXTERNAL_TYCHO_APP_REGISTRY_BRANCH
+          value: "{{ .Values.tycho.externalAppRegistryBranch | default (printf "v%s" .Chart.AppVersion) }}"
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (printf "v%s" .Chart.AppVersion) }}"

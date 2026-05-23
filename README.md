@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 5.1.2](https://img.shields.io/badge/Version-5.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.2](https://img.shields.io/badge/AppVersion-4.4.2-informational?style=flat-square)
+![Version: 5.1.3](https://img.shields.io/badge/Version-5.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.3](https://img.shields.io/badge/AppVersion-4.4.3-informational?style=flat-square)
 
 ## CI/CD
 
@@ -174,7 +174,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | tycho.runAsUser | int | `0` | Application processes launched will run as this user. |
 | tycho.shared_dir | string | `"shared"` | name of directory to use for shared data |
 | tycho.subpath_dir | string | `nil` | Name of directory to use for a user's home directory.  If null then the user's username will be used. |
-| updateStrategy.type | string | `"Recreate"` | 'RollingUpdate' or 'Recreate'. Must use Recreate if mounting PVCs due to multi-attach errors. |
+| updateStrategy.type | string | `"RollingUpdate"` | 'RollingUpdate' or 'Recreate'. Use Recreate only if mounting ReadWriteOnce PVCs (e.g. SQLite mode). |
 | useSparkServiceAccount | bool | `false` | Set to true, when using blackbalsam. |
 | userStorage.createPVC | bool | `true` | Create a PVC for user's files.  If false then the PVC needs to be created outside of the appstore chart. |
 | userStorage.nfs.createPV | bool | `false` |  |

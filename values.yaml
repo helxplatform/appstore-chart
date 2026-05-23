@@ -49,8 +49,8 @@ ldap:
   searchBase: "ou=users,dc=example,dc=org"
 
 updateStrategy:
-  # -- 'RollingUpdate' or 'Recreate'. Must use Recreate if mounting PVCs due to multi-attach errors.
-  type: Recreate
+  # -- 'RollingUpdate' or 'Recreate'. Use Recreate only if mounting ReadWriteOnce PVCs (e.g. SQLite mode).
+  type: RollingUpdate
 
 serviceAccount:
   # -- specifies whether a service account should be created
