@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 5.1.5](https://img.shields.io/badge/Version-5.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.1](https://img.shields.io/badge/AppVersion-4.4.1-informational?style=flat-square)
+![Version: 5.1.7](https://img.shields.io/badge/Version-5.1.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.2](https://img.shields.io/badge/AppVersion-4.4.2-informational?style=flat-square)
 
 ## CI/CD
 
@@ -43,6 +43,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | django.AUTO_WHITELIST_PATTERNS | list | `[]` | Note that these only run on a user's primary alias. If a user has primary@cs.unc.edu as their primary alias, and secondary@renci.org as a secondary alias, they will only be whitelisted automatically if cs.unc.edu emails are allowed. ex. Whitelist all RENCI emails - "^[A-Za-z0-9._%+-]+@renci\\.org$" ex. Whitelist all UNC emails - "^[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\\.)?unc\\.edu$" ex. Whitelist CS dept. (grad./prof.) UNC emails - "^[A-Za-z0-9._%+-]+@cs\\.unc\\.edu$" |
 | django.CSRF_DOMAINS | string | `"https://*.renci.org,https://*.renci.unc.edu"` | allowed domains to make post requests to the appstore |
 | django.DEV_PHASE | string | `"live"` | should be 'live' unless you are doing some kind of development |
+| django.DJANGO_COOKIE_SECURE | string | `"true"` |  |
 | django.DOCKSTORE_APPS_BRANCH | string | `"v1.6.0"` | Specify the git branch to use for HeLx app specifications.  When declaring 'tycho.externalAppRegistryRepo' leave this as an empty string. |
 | django.EMAIL_HOST | string | `""` | Email Server host ie relay.unc.edu | relay.renci.org |
 | django.EMAIL_HOST_PASSWORD | string | `""` | password of account to use for outgoing emails |
