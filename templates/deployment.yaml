@@ -487,6 +487,10 @@ spec:
               name: {{ include "appstore.fullname" . }}-env
         - name: TYCHO_APP_GPU_RESOURCE_NAME
           value: "{{- .Values.tycho.GPUResourceName }}"
+        {{- if .Values.tycho.GPUQueueName }}
+        - name: TYCHO_APP_GPU_QUEUE_NAME
+          value: "{{- .Values.tycho.GPUQueueName }}"
+        {{- end }}
         - name: TYCHO_APP_RUN_AS_USER
           value: "{{- .Values.tycho.runAsUser }}"
         - name: TYCHO_APP_RUN_AS_GROUP
