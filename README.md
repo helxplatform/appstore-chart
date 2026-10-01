@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 5.1.7](https://img.shields.io/badge/Version-5.1.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.2](https://img.shields.io/badge/AppVersion-4.4.2-informational?style=flat-square)
+![Version: 5.1.8](https://img.shields.io/badge/Version-5.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.2](https://img.shields.io/badge/AppVersion-4.4.2-informational?style=flat-square)
 
 ## CI/CD
 
@@ -147,6 +147,7 @@ Additionally there is a workflow that allows bumping the chart version, if this 
 | saml.cache.storageClass | string | `""` |  |
 | saml.cache.storageSize | string | `"20M"` |  |
 | security.appEgressAllowedPods | list | `[]` |  |
+| security.appEgressExtraRules | list | `[]` |  |
 | security.dnsPodSelector | object | `{}` |  |
 | security.isolatedApps | bool | `true` |  |
 | service.name | string | `"http"` |  |

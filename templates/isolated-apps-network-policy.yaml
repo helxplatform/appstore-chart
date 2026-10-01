@@ -60,4 +60,7 @@ spec:
           {{- toYaml . | nindent 10 }}
     {{- end }}
   {{- end }}
+  {{- with .Values.security.appEgressExtraRules }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
 {{- end }}
