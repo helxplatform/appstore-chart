@@ -355,6 +355,10 @@ tycho:
   # "nvidia.com/gpu", but other types exist, such as "nvidia.com/mig-1g.5gb"
   # and other manufacturers have their own types.
   GPUResourceName: "nvidia.com/gpu"
+  # -- Kueue LocalQueue for apps that request GPUs, applied as the
+  # kueue.x-k8s.io/queue-name pod label. Leave empty to let Kueue assign the
+  # namespace default queue.
+  GPUQueueName: ""
   # -- Enable/disable the external app registry file for Tycho.  Set
   # 'django.DOCKSTORE_APPS_BRANCH' to an empty string when when using an
   # external app registry.
